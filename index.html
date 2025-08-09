@@ -3,22 +3,58 @@
 <head>
     <title>Hallo Welt</title>
 </head>
-<body>
 <body style="font-family: system-ui; max-width: 640px; margin: 40px auto; line-height: 1.6;">
   <h1>Hallo Welt!</h1>
-  <p id="msg">Willkommen! 👋 Klicke den Button, um mich zu ändern.</p>
 
+  <p id="msg">Willkommen! 👋 Klicke den Button, um mich zu ändern.</p>
   <button id="greetBtn" style="padding: 10px 14px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer;">
     Sag Hallo
   </button>
 
+  <hr style="margin: 24px 0;" />
+
+  <label for="nameInput">Dein Name:</label>
+  <input id="nameInput" type="text" placeholder="z. B. Florian"
+         style="padding:8px; border:1px solid #ccc; border-radius:6px; width:100%; max-width:320px; display:block; margin:8px 0;">
+  <small id="nameError" style="color:#b00020; visibility:hidden;">Bitte gib 2–30 Buchstaben ein (keine Zahlen).</small>
+
+  <button id="saveBtn" style="padding: 10px 14px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer;">
+    Speichern & Begrüßen
+  </button>
+
   <script>
+    // Uhrzeit button
     const btn = document.getElementById('greetBtn');
     const msg = document.getElementById('msg');
-
     btn.addEventListener('click', () => {
       const now = new Date().toLocaleTimeString();
       msg.textContent = `Hallo! Es ist jetzt ${now}.`;
+    });
+
+    // Neue Elemente für Eingabe & Validierung ---
+    const nameInput = document.getElementById('nameInput');
+    const nameError = document.getElementById('nameError');
+    const saveBtn = document.getElementById('saveBtn');
+
+    // Prüft: 2–30 Zeichen, nur Buchstaben/Leerzeichen/Binde­strich (deutsche Umlaute erlaubt)
+    function isValidName(name) {
+      const trimmed = name.trim();
+      return /^[A-Za-zÄÖÜäöüß\s-]{2,30}$/.test(trimmed);
+    }
+
+    saveBtn.addEventListener('click', () => {
+      const value = nameInput.value;
+
+      if (!isValidName(value)) {
+        nameError.style.visibility = 'visible';
+        nameInput.style.borderColor = '#b00020';
+        return;
+      }
+
+      // Erfolgsfall: Fehlermeldung ausblenden, Begrüßung setzen
+      nameError.style.visibility = 'hidden';
+      nameInput.style.borderColor = '#ccc';
+      msg.textContent = `Hallo, ${value.trim()}! Schön, dass du da bist.`;
     });
   </script>
 </body>
