@@ -4,7 +4,24 @@
     <title>Hallo Welt</title>
 </head>
 <body>
-    <h1>Hallo Welt!</h1>
-    <p>Mein erstes Projekt.</p>
+<body style="font-family: system-ui; max-width: 640px; margin: 40px auto; line-height: 1.6;">
+  <h1>Hallo Welt!</h1>
+  <p id="msg">Willkommen! 👋 Klicke den Button, um mich zu ändern.</p>
+
+  <button id="greetBtn" style="padding: 10px 14px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer;">
+    Sag Hallo
+  </button>
+
+  <script>
+    const btn = document.getElementById('greetBtn');
+    const msg = document.getElementById('msg');
+
+    btn.addEventListener('click', () => {
+      const now = new Date().toLocaleTimeString();
+      msg.textContent = `Hallo! Es ist jetzt ${now}.`;
+    });
+  </script>
+</body>
+
 </body>
 </html>
